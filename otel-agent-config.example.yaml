@@ -1,0 +1,25 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+
+processors:
+  batch:
+    timeout: 10s
+
+exporters:
+  datadog/api:
+    hostname: customhostname
+    env: local
+    tags:
+      - test:test
+
+    api:
+      key: <DD_API_KEY>
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [datadog/api]
